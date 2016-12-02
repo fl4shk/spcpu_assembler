@@ -1,4 +1,5 @@
 *.swp
+*.swo
 deps*/*
 objs*/*
 objs_dis*/*
@@ -17,3 +18,5 @@ disassembly*.armasm
 *.gdb_history*
 tags
 types_*.taghl
+spcpu_assembler
+spcpu_assembler_debug
