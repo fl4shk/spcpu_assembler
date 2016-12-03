@@ -23,6 +23,7 @@
 #define width_to_msb_pos( some_width ) ( some_width + 1 )
 
 #define _align4 aligned(4)
+#define _align2 aligned(2)
 
 
 #define asm_comment( stuff ) \

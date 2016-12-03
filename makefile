@@ -19,11 +19,11 @@ endif
 
 # Comment out or un-comment out the next line to enable debugging stuff to
 # be generated
-DEBUG:=yeah do debug
+#DEBUG:=yeah do debug
 
-DEBUG_OPTIMIZATION_LEVEL:=-O0
+#DEBUG_OPTIMIZATION_LEVEL:=-O0
 #DEBUG_OPTIMIZATION_LEVEL:=-Og
-#DEBUG_OPTIMIZATION_LEVEL:=-O3
+DEBUG_OPTIMIZATION_LEVEL:=-O3
 
 #REGULAR_OPTIMIZATION_LEVEL:=-O1
 REGULAR_OPTIMIZATION_LEVEL:=-O3
