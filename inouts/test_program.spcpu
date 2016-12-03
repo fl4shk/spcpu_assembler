@@ -1,0 +1,5 @@
+begin:
+	
+	cpyi r0, 0x3
+	
+		cpypi r0p, 		0x10ff 

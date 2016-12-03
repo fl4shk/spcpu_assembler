@@ -6,80 +6,20 @@
 #include "misc_includes.hpp"
 
 
-template< typename container_type, typename functor >
-void piecewise_assign_op( container_type& a, container_type& b, 
-	functor&& func )
-{
-	auto b_iter = b.cbegin();
-	
-	for ( auto& val : a )
-	{
-		val = func( val, *b_iter );
-		++b_iter;
-	}
-}
-template< typename container_type, typename type, typename functor >
-void piecewise_assign_op( container_type& a, const type& to_use, 
-	functor&& func )
-{
-	for ( auto& val : a )
-	{
-		val = func( val, to_use );
-	}
-}
 
-template< typename container_type, typename functor >
-container_type piecewise_op( const container_type& a, 
-	const container_type& b, functor&& func )
+template< typename container_type, typename... arg_types >
+inline void multi_push_back( container_type& container, 
+	const arg_types&... args )
 {
-	container_type temp;
-	auto temp_iter = temp.begin();
-	auto b_iter = b.cbegin();
-	
-	for ( auto&& val : a )
-	{
-		*temp_iter = func( val, *b_iter );
-		
-		++temp_iter;
-		++b_iter;
-	}
-	
-	return temp;
+	cout << "const lvalue references!\n";
+	( container.push_back(args), ... );
 }
-template< typename container_type, typename type, typename functor >
-container_type piecewise_op( const container_type& a, const type& to_use, 
-	functor&& func )
+template< typename container_type, typename... arg_types >
+inline void multi_push_back( container_type& container, 
+	arg_types&&... args )
 {
-	container_type temp;
-	auto temp_iter = temp.begin();
-	
-	for ( auto&& val : a )
-	{
-		*temp_iter = func( val, to_use );
-		
-		++temp_iter;
-	}
-	
-	return temp;
-}
-
-template< typename container_type, typename functor >
-bool piecewise_cmp( const container_type& a, const container_type& b, 
-	functor&& func )
-{
-	auto b_iter = b.cbegin();
-	
-	for ( auto&& val : a )
-	{
-		if ( !func( val, *b_iter ) )
-		{
-			return false;
-		}
-		
-		++b_iter;
-	}
-	
-	return true;
+	cout << "rvalue references!\n";
+	( container.push_back(std::move(args)), ... );
 }
 
 
@@ -181,21 +121,82 @@ public:		// functions
 
 
 
+template< typename container_type, typename functor >
+void piecewise_assign_op( container_type& a, container_type& b, 
+	functor&& func )
+{
+	auto b_iter = b.cbegin();
+	
+	for ( auto& val : a )
+	{
+		val = func( val, *b_iter );
+		++b_iter;
+	}
+}
+template< typename container_type, typename type, typename functor >
+void piecewise_assign_op( container_type& a, const type& to_use, 
+	functor&& func )
+{
+	for ( auto& val : a )
+	{
+		val = func( val, to_use );
+	}
+}
 
-template< typename container_type, typename... arg_types >
-inline void multi_push_back( container_type& container, 
-	const arg_types&... args )
+template< typename container_type, typename functor >
+container_type piecewise_op( const container_type& a, 
+	const container_type& b, functor&& func )
 {
-	cout << "const lvalue references!\n";
-	( container.push_back(args), ... );
+	container_type temp;
+	auto temp_iter = temp.begin();
+	auto b_iter = b.cbegin();
+	
+	for ( auto&& val : a )
+	{
+		*temp_iter = func( val, *b_iter );
+		
+		++temp_iter;
+		++b_iter;
+	}
+	
+	return temp;
 }
-template< typename container_type, typename... arg_types >
-inline void multi_push_back( container_type& container, 
-	arg_types&&... args )
+template< typename container_type, typename type, typename functor >
+container_type piecewise_op( const container_type& a, const type& to_use, 
+	functor&& func )
 {
-	cout << "rvalue references!\n";
-	( container.push_back(std::move(args)), ... );
+	container_type temp;
+	auto temp_iter = temp.begin();
+	
+	for ( auto&& val : a )
+	{
+		*temp_iter = func( val, to_use );
+		
+		++temp_iter;
+	}
+	
+	return temp;
 }
+
+template< typename container_type, typename functor >
+bool piecewise_cmp( const container_type& a, const container_type& b, 
+	functor&& func )
+{
+	auto b_iter = b.cbegin();
+	
+	for ( auto&& val : a )
+	{
+		if ( !func( val, *b_iter ) )
+		{
+			return false;
+		}
+		
+		++b_iter;
+	}
+	
+	return true;
+}
+
 
 
 #endif		// cstm_containers_hpp

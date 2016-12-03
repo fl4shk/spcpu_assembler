@@ -5,6 +5,12 @@
 #include <vector>
 #include <array>
 #include <memory>
+#include <map>
+
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <regex>
 
 #include <algorithm>
 #include <chrono>
