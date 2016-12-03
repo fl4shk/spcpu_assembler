@@ -106,12 +106,11 @@ void split_line( const std::string& line, std::vector<token>& tok_vec )
 {
 	for ( token to_push; to_push.start_pos!=std::string::npos; )
 	{
-		if ( to_push.start_pos == 0 )
+		if ( to_push.str.size() == 0 )
 		{
 			find_token( line, 0, to_push );
-			
 		}
-		else // if ( to_push.start_pos > 0 )
+		else // if ( to_push.str.size() > 0 )
 		{
 			find_token( line, tok_vec.back(), to_push );
 		}

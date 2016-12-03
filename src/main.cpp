@@ -4,6 +4,7 @@
 
 #include "instruction_stuff.hpp"
 #include "string_parsing_stuff.hpp"
+#include "cstm_containers.hpp"
 
 //struct label
 //{
@@ -41,6 +42,8 @@ int main( int argc, char** argv )
 	
 	// < line_number, label_name >
 	std::map< size_t, std::string > label_map;
+	
+	// < line_number, tok_vec >
 	std::map< size_t, std::vector<token> > tok_vec_map;
 	
 	
@@ -59,41 +62,60 @@ int main( int argc, char** argv )
 	
 	prog_file.close();
 	
-	//for ( auto iter : line_map )
 	//{
-	//	//cout << iter.first << "|   " << iter.second << endl;
-	//	//show_misc_output( iter.first, "|   ", std::hex,
-	//	//	static_cast<int>(iter.second.back()), "|   ",
-	//	//	iter.second.back(), "\n" );
-	//}
-	
-	
-	{
-		std::vector<token> line_5_tok_vec;
-		const std::string line_5 = line_map.at(5);
-		
-		split_line( line_5, line_5_tok_vec );
-		
-		
-		for ( auto iter : line_5_tok_vec )
-		{
-			show_misc_output( iter.start_pos, "\t\t", iter.str, "\n" );
-		}
-		
-	}
-	
-	//for ( auto token_vec_iter : token_vec_map )
-	//{
-	//	for ( auto iter_2 : iter )
+	//	std::vector<token> line_5_tok_vec;
+	//	const std::string line_5 = line_map.at(5);
+	//	
+	//	split_line( line_5, line_5_tok_vec );
+	//	
+	//	
+	//	for ( auto iter : line_5_tok_vec )
 	//	{
-	//		cout << iter_2.first
+	//		show_misc_output( iter.start_pos, "\t\t", iter.str, "\n" );
 	//	}
-	//}
-	
-	//for ( size_t line_num=1; ; ++line_num )
-	//{
 	//	
 	//}
+	
+	for ( auto iter : line_map )
+	{
+		std::vector<token> tok_vec;
+		
+		split_line( iter.second, tok_vec );
+		
+		show_misc_output( iter.first, " | ", iter.second, "\n" );
+		//show_misc_output( tok_vec.size(), "\n" );
+		
+		//tok_vec_map[iter.first] = std::move(tok_vec);
+		
+		for ( auto tok : tok_vec )
+		{
+			show_misc_output( tok.start_pos, "\t\t", tok.str, "\n" );
+		}
+		
+		cout << "\n\n";
+	}
+	
+	//std::vector<token> tok_vec;
+	//split_line( line_map.at(1), tok_vec );
+	
+	//{
+	//	std::vector<token> line_1_tok_vec;
+	//	const std::string line_1 = line_map.at(1);
+	//	
+	//	
+	//	//token tok_0, tok_1, tok_2;
+	//	//
+	//	//find_token( line_1, 0, tok_0 );
+	//	//find_token( line_1, tok_0, tok_1 );
+	//	//find_token( line_1, tok_1, tok_2 );
+	//	//
+	//	//show_misc_output( tok_0.str, "\n", tok_1.str, "\n", tok_2.str, 
+	//	//	"\n" );
+	//	
+	//	split_line( line_1, line_1_tok_vec );
+	//	
+	//}
+	
 	
 	return 0;
 }
