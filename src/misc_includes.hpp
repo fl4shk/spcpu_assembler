@@ -37,6 +37,8 @@
 #include <iterator>
 #include <type_traits>
 
+#include <string.h>
+
 using std::cout;
 using std::cin;
 using std::endl;

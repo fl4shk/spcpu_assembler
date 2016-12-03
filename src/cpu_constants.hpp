@@ -20,6 +20,7 @@
 #define cpu_constants_hpp
 
 #include "misc_defines.hpp"
+#include "misc_bitwise_funcs.hpp"
 
 constexpr size_t proc_flags_width = 2;
 constexpr size_t proc_flags_msb_pos = width_to_msb_pos(proc_flags_width);

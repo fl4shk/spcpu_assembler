@@ -426,24 +426,161 @@ enum instr_grp_5_oper
 };
 
 
+
+// Encoded instructions
+
 // Group 1 (Non-branching instructions with 8-bit immediate values):  
 // Encoding:  0ooo aaaa iiii iiii
-
-// "Expanded" instruction structs are used during processing and eventually
-// get converted to "encoded" instruction structs
-struct expanded_ig1_instr
+struct encoded_ig1_instr
 {
+public:		// variables
+	//u16 id : 1;
+	//u16 op : instr_g1_op_width; 
+	//u16 ra_index : instr_g1_ra_index_width;
+	//u16 imm_value : instr_g1_imm_value_width;
+	u16 data = 0;
+	
+public:		// variables
+	inline void set_id( size_t n_id )
+	{
+		clear_and_set_bits_with_range( data, n_id, instr_g1_id_pos,
+			instr_g1_id_pos );
+	}
+	inline void set_op( instr_grp_1_oper n_op )
+	{
+		clear_and_set_bits_with_range( data, n_op, instr_g1_op_range_hi,
+			instr_g1_op_range_lo );
+	}
+	inline void set_ra_index( u32 n_ra_index )
+	{
+		clear_and_set_bits_with_range( data, n_ra_index,
+			instr_g1_ra_index_range_hi, instr_g1_ra_index_range_lo );
+	}
+	inline void set_imm_value( u32 n_imm_value )
+	{
+		clear_and_set_bits_with_range( data, n_imm_value,
+			instr_g1_imm_value_range_hi, instr_g1_imm_value_range_lo );
+	}
+	
+	// Debugging getters
+	inline size_t get_id() const
+	{
+		return get_bits_with_range( data, instr_g1_id_pos, 
+			instr_g1_id_pos );
+	}
+	inline size_t get_op() const
+	{
+		return get_bits_with_range( data, instr_g1_op_range_hi, 
+			instr_g1_op_range_lo );
+	}
+	inline size_t get_ra_index() const
+	{
+		return get_bits_with_range( data, instr_g1_ra_index_range_hi, 
+			instr_g1_ra_index_range_lo );
+	}
+	inline size_t get_imm_value() const
+	{
+		return get_bits_with_range( data, instr_g1_imm_value_range_hi, 
+			instr_g1_imm_value_range_lo );
+	}
+	
+	
+} __attribute__((_align2));
+
+
+// Group 2 (The instruction group with the most opcodes):  
+// Encoding:  10oo oooo aaaa bbbb
+struct encoded_ig2_instr
+{
+public:		// variables
+	//u16 id : instr_g2_id_range_hi - instr_g2_id_range_lo + 1;
+	//u16 op : instr_g2_op_width;
+	//u16 ra_index : instr_g2_ra_index_width;
+	//u16 rb_index : instr_g2_rb_index_width;
+	u16 data;
+	
+public:		// variables
+	//inline void set_id( u32 val )
+	//{
+	//	
+	//}
+	
+} __attribute__((_align2));
+
+
+// Group 3 (Instructions with one register and two register pairs):  
+// Encoding:  1100 ooaa aabb bccc
+struct encoded_ig3_instr
+{
+public:		// variables
+	u16 id : instr_g3_id_range_hi - instr_g3_id_range_lo + 1;
+	u16 op : instr_g3_op_width;
+	u16 ra_index : instr_g3_ra_index_width;
+	u16 rbp_index : instr_g3_rbp_index_width;
+	u16 rcp_index : instr_g3_rcp_index_width;
+} __attribute__((_align2));
+
+
+
+
+
+
+// "Expanded" instruction classes are used during processing and eventually
+// get converted to "encoded" instruction structs
+
+// Group 1 (Non-branching instructions with 8-bit immediate values):  
+// Encoding:  0ooo aaaa iiii iiii
+class expanded_ig1_instr
+{
+public:		// variables
+	static constexpr size_t id = instr_g1_id;
+	instr_grp_1_oper op;
+	u32 ra_index;
+	u8 imm_value;
+	
+public:		// functions
+	//inline encoded_ig1_instr encode() const
+	//{
+	//	
+	//}
 	
 };
 
-// Encoded instructions from group 1
-struct encoded_ig1_instr
+// Group 2 (The instruction group with the most opcodes):  
+// Encoding:  10oo oooo aaaa bbbb
+class expanded_ig2_instr
 {
-	u16 field_0 : 3;
-	u16 field_1 : 9;
-	u16 field_2 : 4;
-} __attribute__((_align2));
+public:		// variables
+	static constexpr size_t id = instr_g2_id;
+	instr_grp_2_oper op;
+	u32 ra_index, rb_index;
+	bool ra_index_is_for_pair, rb_index_is_for_pair;
+	
+public:		// functions
+	//inline encoded_ig2_instr encode() const
+	//{
+	//	encoded_ig2_instr ret;
+	//	
+	//	ret.
+	//}
+	
+};
 
+// Group 3 (Instructions with one register and two register pairs):  
+// Encoding:  1100 ooaa aabb bccc
+class expanded_ig3_instr
+{
+public:		// variables
+	static constexpr size_t id = instr_g3_id;
+	instr_grp_3_oper op;
+	u32 ra_index, rbp_index, rcp_index;
+	
+public:		// functions
+	//inline encoded_ig3_instr encode() const
+	//{
+	//	
+	//}
+};
 
 
 

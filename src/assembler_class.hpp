@@ -22,6 +22,7 @@
 
 #include "misc_types.hpp"
 #include "misc_includes.hpp"
+#include "misc_bitwise_funcs.hpp"
 #include "misc_output_class.hpp"
 
 #include "instruction_stuff.hpp"
