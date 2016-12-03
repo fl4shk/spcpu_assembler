@@ -1,3 +1,21 @@
+// This file is part of SPCPU Assembler.
+// 
+// Copyright 2016 by Andrew Clark (FL4SHK).
+// 
+// SPCPU Assembler is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by the
+// Free Software Foundation, either version 3 of the License, or (at your
+// option) any later version.
+// 
+// SPCPU Assembler is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License along
+// with SPCPU Assembler.  If not, see <http://www.gnu.org/licenses/>.
+
+
 #include "misc_types.hpp"
 #include "misc_includes.hpp"
 #include "misc_output_class.hpp"
@@ -76,6 +94,9 @@ int main( int argc, char** argv )
 	//	
 	//}
 	
+	
+	// Split the line_map into a map of vectors of tokens so further
+	// processing can be done
 	for ( auto iter : line_map )
 	{
 		std::vector<token> tok_vec;
@@ -85,7 +106,7 @@ int main( int argc, char** argv )
 		show_misc_output( iter.first, " | ", iter.second, "\n" );
 		//show_misc_output( tok_vec.size(), "\n" );
 		
-		//tok_vec_map[iter.first] = std::move(tok_vec);
+		tok_vec_map[iter.first] = std::move(tok_vec);
 		
 		for ( auto tok : tok_vec )
 		{
@@ -95,26 +116,6 @@ int main( int argc, char** argv )
 		cout << "\n\n";
 	}
 	
-	//std::vector<token> tok_vec;
-	//split_line( line_map.at(1), tok_vec );
-	
-	//{
-	//	std::vector<token> line_1_tok_vec;
-	//	const std::string line_1 = line_map.at(1);
-	//	
-	//	
-	//	//token tok_0, tok_1, tok_2;
-	//	//
-	//	//find_token( line_1, 0, tok_0 );
-	//	//find_token( line_1, tok_0, tok_1 );
-	//	//find_token( line_1, tok_1, tok_2 );
-	//	//
-	//	//show_misc_output( tok_0.str, "\n", tok_1.str, "\n", tok_2.str, 
-	//	//	"\n" );
-	//	
-	//	split_line( line_1, line_1_tok_vec );
-	//	
-	//}
 	
 	
 	return 0;

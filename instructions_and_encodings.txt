@@ -1,1 +1,0 @@
-../small_practice_cpu/instructions_and_encodings.txt

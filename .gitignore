@@ -20,3 +20,4 @@ tags
 types_*.taghl
 spcpu_assembler
 spcpu_assembler_debug
+instructions_and_encodings.txt
